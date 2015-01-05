@@ -9,6 +9,13 @@
 
         this.show = function() {
             var args = [].slice.call(arguments, 0);
+            if (typeof args[0] === 'object' && typeof args[1] === 'function') {
+                var doneFunc = args[1];
+                args[1] = function() {
+                    doneFunc.apply(this, arguments);
+                    $rootScope.$apply();
+                };
+            }
             al.apply(undefined, args);
         };
     };
